@@ -7,13 +7,35 @@ import CalcButton from "./CalcButton";
 
 import reducer, { initialState } from "../reducers";
 import { addOne } from "../actions/index";
-import { applyNumber } from "../actions/index";
+import {
+  applyNumber,
+  changeOperation,
+  clearDisplay,
+  addMemory,
+  applyMemory,
+} from "../actions/index";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleNumberClick = (number) => {
     dispatch(applyNumber(number));
+  };
+
+  const handleOperationClick = (operator) => {
+    dispatch(changeOperation(operator));
+  };
+
+  const handleClearDisplay = () => {
+    dispatch(clearDisplay());
+  };
+
+  const handleAddMemory = () => {
+    dispatch(addMemory());
+  };
+
+  const handleMemoryApply = () => {
+    dispatch(applyMemory());
   };
   return (
     <div className="App">
@@ -38,8 +60,8 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={"M+"} />
-              <CalcButton value={"MR"} />
+              <CalcButton value={"M+"} onClick={() => handleAddMemory} />
+              <CalcButton value={"MR"} onClick={() => handleMemoryApply} />
               <CalcButton value={"MC"} />
             </div>
 
@@ -107,13 +129,22 @@ function App() {
             </div>
 
             <div className="row">
-              <CalcButton value={"+"} />
-              <CalcButton value={"*"} />
-              <CalcButton value={"-"} />
+              <CalcButton
+                value={"+"}
+                onClick={() => handleOperationClick("+")}
+              />
+              <CalcButton
+                value={"*"}
+                onClick={() => handleOperationClick("*")}
+              />
+              <CalcButton
+                value={"-"}
+                onClick={() => handleOperationClick("-")}
+              />
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"} />
+              <CalcButton value={"CE"} onClick={handleClearDisplay} />
             </div>
           </form>
         </div>
